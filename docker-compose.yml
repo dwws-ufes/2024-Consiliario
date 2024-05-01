@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - 5173:80
+
+  # backend:
+  #   build: ./server
+  #   ports:
+  #     - 8080:8080
+
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
