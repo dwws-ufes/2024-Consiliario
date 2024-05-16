@@ -8,5 +8,5 @@ import java.util.*
 interface UserRepository : CoroutineCrudRepository<User, UUID> {
 
     @Query("SELECT * FROM users WHERE email = :email")
-    suspend fun findByEmail(email: String): List<User>
+    suspend fun findByEmail(email: String): User
 }
