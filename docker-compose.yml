@@ -6,10 +6,10 @@ services:
   #   ports:
   #     - 5173:80
 
-  # backend:
-  #   build: ./server
-  #   ports:
-  #     - 8080:8080
+  backend:
+    build: ./server
+    ports:
+      - 8080:8080
 
   database:
     image: postgres

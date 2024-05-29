@@ -1,4 +1,4 @@
-package br.inf.ufes.consiliario.application.auth
+package br.inf.ufes.consiliario.security
 
 import br.inf.ufes.consiliario.repository.UserRepository
 import kotlinx.coroutines.reactor.mono
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
 @Service
-class AuthenticationService(
+class UserDetailsService(
         private val repository: UserRepository
 ) : ReactiveUserDetailsService {
     override fun findByUsername(email: String?): Mono<UserDetails> {

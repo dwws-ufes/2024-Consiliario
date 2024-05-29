@@ -1,60 +1,55 @@
-package br.inf.ufes.consiliario.security
-
-import br.inf.ufes.consiliario.application.auth.AuthenticationService
+import br.inf.ufes.consiliario.security.JWTAuthenticationConverter
+import br.inf.ufes.consiliario.security.JWTAuthorizationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpMethod
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.ProviderManager
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.DefaultSecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder
+import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.web.server.SecurityWebFilterChain
+import org.springframework.security.web.server.authentication.AuthenticationWebFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.reactive.CorsConfigurationSource
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
+import org.springframework.security.config.web.server.invoke
 
 @Configuration
-@EnableWebSecurity
-class SecurityConfiguration(
-        private val authenticationService: AuthenticationService,
-        private val securityFilter: SecurityFilter
-) {
+@EnableWebFluxSecurity
+class SecurityConfiguration() {
+
     @Bean
-    fun securityFilterChain(
-            http: HttpSecurity,
-            securityFilter: SecurityFilter
-    ): DefaultSecurityFilterChain {
-        return http.authorizeHttpRequests {
-            it
-                    .anyRequest().authenticated()
-                    .requestMatchers(HttpMethod.POST,"/login").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/register").permitAll()
-        }.csrf {
-            it.disable()
-        }.sessionManagement {
-            it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        }.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter::class.java)
-                .build()
+    fun corsConfigurationSource(): CorsConfigurationSource? {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("*")
+        configuration.allowedMethods = listOf("*")
+        configuration.allowedHeaders = listOf("*")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 
     @Bean
-    fun authenticationManager(
-            authenticationManagerBuilder: AuthenticationManagerBuilder,
-            passwordEncoder: PasswordEncoder
-    ): AuthenticationManager {
-        val provider = DaoAuthenticationProvider()
-        provider.setPasswordEncoder(passwordEncoder)
-        provider.setUserDetailsService(authenticationService)
+    fun configure(
+        http: ServerHttpSecurity,
+        jwtAuthorizationFilter: JWTAuthorizationFilter,
+        jwtAuthenticationConverter: JWTAuthenticationConverter
+    ): SecurityWebFilterChain {
+        val authenticationWebFilter = AuthenticationWebFilter(jwtAuthorizationFilter).also {
+            it.setServerAuthenticationConverter(jwtAuthenticationConverter)
+        }
 
-        return ProviderManager(provider)
-    }
-
-    @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        // For simplicity, this project does not use salt. Though, it should definitely be used in real applications
-        return BCryptPasswordEncoder()
+        return http {
+            csrf {
+                disable()
+            }
+            cors {
+                configurationSource = corsConfigurationSource()
+            }
+            authorizeExchange {
+                authorize("/login", permitAll)
+                authorize("/register", permitAll)
+                authorize(anyExchange, authenticated)
+            }
+            addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+        }
     }
 }

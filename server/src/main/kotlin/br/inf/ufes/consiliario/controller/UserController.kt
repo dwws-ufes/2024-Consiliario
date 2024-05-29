@@ -15,6 +15,6 @@ class UserController(
         @RequestParam email: String
     ) = userApplication.getUserByEmail(email)
 
-    @PostMapping
+    @PostMapping("/register")
     suspend fun createUser() = userApplication.createUser()
 }
