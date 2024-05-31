@@ -4,11 +4,10 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import java.time.Instant
 import java.util.UUID
 
-@Table("Users")
-class User(
+@Table("Teacher")
+class Teacher(
     @Id val id: UUID? = null,
     val email: String,
     private val username: String,
