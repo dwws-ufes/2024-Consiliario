@@ -28,12 +28,21 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("org.flywaydb:flyway-core")
+	implementation("org.postgresql:r2dbc-postgresql")
+	implementation("org.postgresql:postgresql")
+	implementation("io.r2dbc:r2dbc-spi:1.0.0.RELEASE")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("org.postgresql:postgresql")
-	runtimeOnly("org.postgresql:r2dbc-postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.security:spring-security-test")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.data:spring-data-r2dbc")
+	implementation("io.jsonwebtoken:jjwt:0.12.5")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
+
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
 }
 
 tasks.withType<KotlinCompile> {
