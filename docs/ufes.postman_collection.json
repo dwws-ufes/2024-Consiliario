@@ -7,56 +7,252 @@
 	},
 	"item": [
 		{
-			"name": "Register",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"joasney@email.com\",\r\n    \"username\": \"joasney\",\r\n    \"password\": \"123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joasney@mail.com\",\r\n    \"username\": \"joasney\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/register",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"register"
-					]
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joasney@mail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recover Password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joasney@mail.com\",\r\n    \"oldPassword\": \"123\",\r\n    \"newPassword\": \"321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/recoverPassword",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recoverPassword"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"joasney@email.com\",\r\n    \"password\": \"123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Student",
+			"item": [
+				{
+					"name": "Register Student",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"student1@mail.com\",\r\n    \"fullName\": \"student1@mail.com\",\r\n    \"advisor\": \"abfae3ad-05cd-4745-af07-72e0c0898b4e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All From Advisor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student?advisorId=abfae3ad-05cd-4745-af07-72e0c0898b4e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							],
+							"query": [
+								{
+									"key": "advisorId",
+									"value": "abfae3ad-05cd-4745-af07-72e0c0898b4e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{bearer_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
 					}
 				},
-				"url": {
-					"raw": "{{base_url}}/login",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"login"
-					]
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Recommendation",
+			"item": [
+				{
+					"name": "Recommend",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "recommendationFile",
+									"type": "file",
+									"src": "/C:/Users/henri/Downloads/recommendation.jpg"
+								},
+								{
+									"key": "recommendationUrl",
+									"value": "https://x.com/fireship_dev/status/1796526654183059925",
+									"type": "text"
+								},
+								{
+									"key": "receiver",
+									"value": "dd6e0a40-95fe-49e4-a576-5bbafbbebc45",
+									"type": "text"
+								},
+								{
+									"key": "sender",
+									"value": "abfae3ad-05cd-4745-af07-72e0c0898b4e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/recommendation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -85,6 +281,11 @@
 		{
 			"key": "base_url",
 			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "bearer_token",
+			"value": "",
 			"type": "string"
 		}
 	]
