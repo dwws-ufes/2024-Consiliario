@@ -34,7 +34,7 @@ class SecurityConfig(
             .authorizeExchange { authorizeExchange ->
                 authorizeExchange
                     .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                    .pathMatchers(HttpMethod.POST, "/register", "/login").permitAll()
+                    .pathMatchers(HttpMethod.POST, "/register", "/login", "/recoverPassword").permitAll()
                     .pathMatchers("/**").authenticated()
                     .anyExchange().authenticated()
             }

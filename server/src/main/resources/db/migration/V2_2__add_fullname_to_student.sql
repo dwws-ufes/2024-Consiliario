@@ -1,0 +1,1 @@
+ALTER TABLE consiliario.Student ADD COLUMN full_name VARCHAR(50);

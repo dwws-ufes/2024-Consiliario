@@ -30,6 +30,11 @@ spring:
     schema: classpath:/schema.sql
     continue-on-error: true
 
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 35MB
+
 jwt:
   secret: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-01234567890123456789012345678
   expiration: 28800

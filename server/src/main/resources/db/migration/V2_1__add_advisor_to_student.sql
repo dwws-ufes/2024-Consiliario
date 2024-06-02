@@ -1,0 +1,1 @@
+ALTER TABLE consiliario.Student ADD COLUMN advisor UUID REFERENCES consiliario.Teacher(id);

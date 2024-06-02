@@ -42,6 +42,9 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
+	implementation(platform("software.amazon.awssdk:bom:2.25.64"))
+	implementation("software.amazon.awssdk:s3")
+
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
 }
 
