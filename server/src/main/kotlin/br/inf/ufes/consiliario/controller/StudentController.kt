@@ -15,12 +15,17 @@ import java.util.*
 class StudentController(
     private val studentApplication: StudentApplication
 ) {
+    @GetMapping
+    suspend fun getStudent(
+        @RequestParam studentId: UUID
+    ) = studentApplication.getStudent(studentId)
+
     @PostMapping
     suspend fun registerStudent(
         @RequestBody studentRegisterDto: StudentRegisterDto
     ) = studentApplication.registerStudent(studentRegisterDto)
 
-    @GetMapping
+    @GetMapping("/from-advisor")
     suspend fun getAllFromAdvisor(
         @RequestParam advisorId: UUID
     ) = studentApplication.getAllFromAdvisor(advisorId)

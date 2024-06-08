@@ -9,6 +9,8 @@ import java.util.*
 class StudentApplication(
     private val studentRepository: StudentRepository
 ) {
+    suspend fun getStudent(studentId: UUID) = studentRepository.findById(studentId)
+
     suspend fun registerStudent(studentRegisterDto: StudentRegisterDto) =
         studentRepository.save(studentRegisterDto.toEntity())
 
