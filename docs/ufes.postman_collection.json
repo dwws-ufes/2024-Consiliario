@@ -10,6 +10,39 @@
 			"name": "Teacher",
 			"item": [
 				{
+					"name": "Get Teacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teacher?teacherId=abfae3ad-05cd-4745-af07-72e0c0898b4e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teacher"
+							],
+							"query": [
+								{
+									"key": "teacherId",
+									"value": "abfae3ad-05cd-4745-af07-72e0c0898b4e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Register",
 					"request": {
 						"auth": {
@@ -102,6 +135,39 @@
 			"name": "Student",
 			"item": [
 				{
+					"name": "Get Student",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student?studentId=dd6e0a40-95fe-49e4-a576-5bbafbbebc45",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							],
+							"query": [
+								{
+									"key": "studentId",
+									"value": "dd6e0a40-95fe-49e4-a576-5bbafbbebc45"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Register Student",
 					"request": {
 						"auth": {
@@ -118,7 +184,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"student1@mail.com\",\r\n    \"fullName\": \"student1@mail.com\",\r\n    \"advisor\": \"abfae3ad-05cd-4745-af07-72e0c0898b4e\"\r\n}",
+							"raw": "{\r\n    \"email\": \"student1@mail.com\",\r\n    \"fullName\": \"Student1\",\r\n    \"advisor\": \"abfae3ad-05cd-4745-af07-72e0c0898b4e\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -140,15 +206,26 @@
 				{
 					"name": "Get All From Advisor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/student?advisorId=abfae3ad-05cd-4745-af07-72e0c0898b4e",
+							"raw": "{{base_url}}/student/from-advisor?advisorId=abfae3ad-05cd-4745-af07-72e0c0898b4e",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"student"
+								"student",
+								"from-advisor"
 							],
 							"query": [
 								{
@@ -219,12 +296,13 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "recommendationFile",
+									"key": "resourceFile",
 									"type": "file",
-									"src": "/C:/Users/henri/Downloads/recommendation.jpg"
+									"src": "/C:/Users/henri/Downloads/recommendation.jpg",
+									"disabled": true
 								},
 								{
-									"key": "recommendationUrl",
+									"key": "resourceUrl",
 									"value": "https://x.com/fireship_dev/status/1796526654183059925",
 									"type": "text"
 								},
@@ -247,6 +325,72 @@
 							],
 							"path": [
 								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recommendation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recommendation?recommendationId=be7b2b4b-df06-4ad2-b3ab-51b9233d125a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recommendation"
+							],
+							"query": [
+								{
+									"key": "recommendationId",
+									"value": "be7b2b4b-df06-4ad2-b3ab-51b9233d125a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recommendation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recommendation?recommendationId=92831dda-7ce9-49fe-b517-ff3416e4ba6b",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recommendation"
+							],
+							"query": [
+								{
+									"key": "recommendationId",
+									"value": "92831dda-7ce9-49fe-b517-ff3416e4ba6b"
+								}
 							]
 						}
 					},
