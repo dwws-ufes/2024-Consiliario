@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 export default {
   data() {
@@ -46,8 +47,10 @@ export default {
         const response = await axios.post('http://localhost:8080/login', payload);
         if (response.status === 200) {
           const token = response.data.token;
+          const decodedToken = jwtDecode(token);
           localStorage.setItem('auth', 'true');
           localStorage.setItem('token', token);
+          localStorage.setItem('userId', decodedToken.id);
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           this.$router.push('/');
         } else {

@@ -35,7 +35,7 @@ internal class DatabaseConfig : AbstractR2dbcConfiguration() {
 
     @Bean
     override fun connectionFactory(): ConnectionFactory {
-        val baseOptions = parse("r2dbc:postgresql://localhost:5432/postgres?schema=consiliario")
+        val baseOptions = parse("r2dbc:postgresql://database:5432/postgres?schema=consiliario")
         var ob = builder().from(baseOptions)
         ob = ob.option(USER, "postgres")
         ob = ob.option(PASSWORD, "admin")

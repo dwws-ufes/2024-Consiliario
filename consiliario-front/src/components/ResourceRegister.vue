@@ -1,29 +1,24 @@
 <template>
   <div class="register-container">
     <div class="box">
-      <h2 class="title is-3">Resource Registration</h2>
-      <form @submit.prevent="handleRegister">
+      <h2 class="title is-3">Register Resource</h2>
+      <form @submit.prevent="handleRegister" enctype="multipart/form-data">
         <div class="field">
-          <label class="label" for="url">URL</label>
+          <label class="label" for="resourceFile">Resource File</label>
           <div class="control">
-            <input class="input" type="text" id="url" v-model="url" required />
+            <input class="input" type="file" id="resourceFile" @change="handleFileUpload" required />
           </div>
         </div>
         <div class="field">
-          <label class="label" for="creationDate">Creation Date</label>
+          <label class="label" for="resourceUrl">Resource URL</label>
           <div class="control">
-            <input class="input" type="date" id="creationDate" v-model="creationDate" required />
+            <input class="input" type="text" id="resourceUrl" v-model="resourceUrl" required />
           </div>
         </div>
         <div class="field">
-          <label class="label" for="type">Type</label>
+          <label class="label" for="receiver">Receiver</label>
           <div class="control">
-            <div class="select">
-              <select id="type" v-model="type" required>
-                <option value="File">File</option>
-                <option value="Url">Url</option>
-              </select>
-            </div>
+            <input class="input" type="text" id="receiver" v-model="receiver" required />
           </div>
         </div>
         <div class="field">
@@ -37,23 +32,49 @@
 </template>
 
 <script>
+import axios from '@/axios';
+
 export default {
   data() {
     return {
-      url: '',
-      creationDate: '',
-      type: 'File'
-    }
+      resourceFile: null,
+      resourceUrl: '',
+      receiver: '',
+    };
   },
   methods: {
-    handleRegister() {
-      // Lógica para registro de recursos
-      console.log('URL:', this.url)
-      console.log('Creation Date:', this.creationDate)
-      console.log('Type:', this.type)
+    handleFileUpload(event) {
+      this.resourceFile = event.target.files[0];
+    },
+    async handleRegister() {
+      try {
+        const sender = localStorage.getItem('userId');
+        const formData = new FormData();
+        formData.append('resourceFile', this.resourceFile);
+        formData.append('resourceUrl', this.resourceUrl);
+        formData.append('receiver', this.receiver);
+        formData.append('sender', sender);
+        
+        const response = await axios.post('http://localhost:8080/recommendation', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        if (response.status === 200) {
+          alert('Resource registered successfully.');
+          this.resourceFile = null;
+          this.resourceUrl = '';
+          this.receiver = '';
+        } else {
+          alert('Registration failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error during registration:', error);
+        alert('Registration failed. Please try again.');
+      }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -68,7 +89,7 @@ export default {
 }
 .box {
   width: 100%;
-  max-width: 800px;
+  max-width: 400px;
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
