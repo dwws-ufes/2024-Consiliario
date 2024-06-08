@@ -1,5 +1,6 @@
 package br.inf.ufes.consiliario.security
 
+import br.inf.ufes.consiliario.entity.Teacher
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.*
 import io.jsonwebtoken.jackson.io.JacksonDeserializer
@@ -31,6 +32,7 @@ class JWTUtil(
         val claims = mutableMapOf<String, Any>()
         claims["authorities"] = user.authorities
         claims["enabled"] = user.isEnabled
+        claims["id"] = (user as Teacher).id.toString()
         return doGenerateToken(user.username, claims)
     }
 

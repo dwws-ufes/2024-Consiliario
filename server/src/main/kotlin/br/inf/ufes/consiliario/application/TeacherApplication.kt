@@ -1,15 +1,13 @@
 package br.inf.ufes.consiliario.application
 
-import br.inf.ufes.consiliario.dto.TeacherLoginDto
-import br.inf.ufes.consiliario.dto.TeacherLoginResponseDto
-import br.inf.ufes.consiliario.dto.TeacherRecoverPasswordDto
-import br.inf.ufes.consiliario.dto.TeacherRegisterDto
+import br.inf.ufes.consiliario.dto.*
 import br.inf.ufes.consiliario.entity.Teacher
 import br.inf.ufes.consiliario.repository.TeacherRepository
 import br.inf.ufes.consiliario.security.JWTUtil
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class TeacherApplication(
@@ -17,6 +15,8 @@ class TeacherApplication(
     private val passwordEncoder: BCryptPasswordEncoder,
     private val jwtUtil: JWTUtil
 ) {
+    suspend fun getTeacher(teacherId: UUID) = teacherRepository.findById(teacherId)?.let { TeacherDto(it) }
+
     suspend fun createTeacher(
         teacherRegisterDto: TeacherRegisterDto
     ) {
@@ -30,11 +30,14 @@ class TeacherApplication(
     }
 
     suspend fun login(teacherLoginDto: TeacherLoginDto): TeacherLoginResponseDto {
-        val teacher = teacherRepository.findByEmail(teacherLoginDto.email)
-            ?: throw BadCredentialsException("Invalid credentials")
+        val teacher =
+            teacherRepository.findByEmail(teacherLoginDto.email) ?: throw BadCredentialsException("Invalid credentials")
 
-        if (passwordEncoder.matches(teacherLoginDto.password, teacher.password))
-            return TeacherLoginResponseDto(jwtUtil.generateToken(teacher))
+        if (passwordEncoder.matches(
+                teacherLoginDto.password,
+                teacher.password
+            )
+        ) return TeacherLoginResponseDto(jwtUtil.generateToken(teacher))
         else throw BadCredentialsException("Invalid credentials")
     }
 
@@ -42,8 +45,11 @@ class TeacherApplication(
         val teacher = teacherRepository.findByEmail(teacherRecoverPasswordDto.email)
             ?: throw BadCredentialsException("Invalid credentials")
 
-        if (!passwordEncoder.matches(teacherRecoverPasswordDto.oldPassword, teacher.password))
-            throw BadCredentialsException("Invalid credentials")
+        if (!passwordEncoder.matches(
+                teacherRecoverPasswordDto.oldPassword,
+                teacher.password
+            )
+        ) throw BadCredentialsException("Invalid credentials")
 
         teacherRepository.save(
             Teacher(
