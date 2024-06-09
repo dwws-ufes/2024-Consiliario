@@ -14,8 +14,9 @@
 export default {
   methods: {
     logout() {
-      localStorage.removeItem('auth')
-      this.$router.push('/login')
+      localStorage.removeItem('auth');
+      localStorage.removeItem('userId');
+      this.$router.push('/login');
     }
   }
 }
@@ -24,7 +25,7 @@ export default {
 <style scoped>
 .navbar {
   background-color: #6aadf1 !important;
-  width: 100%;
+  width: calc(100% - 250px); /* Ajuste para a largura da barra lateral */
   position: fixed;
   top: 0;
   left: 250px; /* Espaço para a barra lateral */

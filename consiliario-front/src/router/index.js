@@ -7,6 +7,7 @@ import LoginView from '@/views/LoginView.vue'
 import DashboardLayout from '@/components/DashboardLayout.vue'
 import ResourceRegister from '@/components/ResourceRegister.vue'
 import TeacherRegister from '@/views/TeacherRegisterView.vue';
+import RecommendationList from '@/components/RecommendationList.vue';
 
 Vue.use(VueRouter)
 
@@ -23,7 +24,8 @@ const routes = [
       { path: '', component: StudentList },
       { path: 'register-student', component: StudentRegister },
       { path: 'list-students', component: StudentList },
-      { path: 'register-resource', component: ResourceRegister }
+      { path: 'register-resource', component: ResourceRegister },
+      { path: 'recommendations', component: RecommendationList  }      
     ]
   },
   {

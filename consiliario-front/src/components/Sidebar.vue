@@ -14,8 +14,8 @@
             <router-link to="/register-resource" class="nav-link">Register Resource</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/associate-student-resource" class="nav-link"
-              >Associate Student with Resource</router-link
+            <router-link to="/recommendations" class="nav-link"
+              >Recommendations</router-link
             >
           </li>
         </ul>

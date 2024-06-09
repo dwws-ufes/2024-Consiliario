@@ -6,19 +6,25 @@
         <div class="field">
           <label class="label" for="resourceFile">Resource File</label>
           <div class="control">
-            <input class="input" type="file" id="resourceFile" @change="handleFileUpload" required />
+            <input class="input" type="file" id="resourceFile" @change="handleFileUpload" />
           </div>
         </div>
         <div class="field">
           <label class="label" for="resourceUrl">Resource URL</label>
           <div class="control">
-            <input class="input" type="text" id="resourceUrl" v-model="resourceUrl" required />
+            <input class="input" type="text" id="resourceUrl" v-model="resourceUrl" />
           </div>
         </div>
         <div class="field">
           <label class="label" for="receiver">Receiver</label>
           <div class="control">
-            <input class="input" type="text" id="receiver" v-model="receiver" required />
+            <div class="select">
+              <select v-model="receiver">
+                <option v-for="student in students" :key="student.id" :value="student.id">
+                  {{ student.fullName }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="field">
@@ -40,9 +46,23 @@ export default {
       resourceFile: null,
       resourceUrl: '',
       receiver: '',
+      students: [],
     };
   },
+  created() {
+    this.fetchStudents();
+  },
   methods: {
+    async fetchStudents() {
+      try {
+        const advisorId = localStorage.getItem('userId');
+        const response = await axios.get(`http://localhost:8080/student/from-advisor?advisorId=${advisorId}`);
+        this.students = response.data;
+      } catch (error) {
+        console.error('Error fetching students:', error);
+        alert('Failed to fetch students. Please try again.');
+      }
+    },
     handleFileUpload(event) {
       this.resourceFile = event.target.files[0];
     },
@@ -50,7 +70,9 @@ export default {
       try {
         const sender = localStorage.getItem('userId');
         const formData = new FormData();
-        formData.append('resourceFile', this.resourceFile);
+        if (this.resourceFile) {
+          formData.append('resourceFile', this.resourceFile);
+        }
         formData.append('resourceUrl', this.resourceUrl);
         formData.append('receiver', this.receiver);
         formData.append('sender', sender);
