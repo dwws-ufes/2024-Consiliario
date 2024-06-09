@@ -2,7 +2,7 @@ spring:
   main:
     web-application-type: reactive
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/postgres
+    url: r2dbc:postgresql://database:5432/postgres
     schema: consiliario
     username: postgres
     password: admin
@@ -14,7 +14,7 @@ spring:
 
   flyway:
     validate-migration-naming: true
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://database:5432/postgres
     locations: classpath:db/migration
 
   mvc:
