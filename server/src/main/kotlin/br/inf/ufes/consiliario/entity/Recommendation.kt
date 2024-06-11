@@ -8,5 +8,9 @@ data class Recommendation(
     val receiver: UUID,
     val sender: UUID,
     var url: String? = null,
-    var fileUrl: String? = null
+    var type: RecommendationType? = null
 )
+
+enum class RecommendationType {
+    FILE, URL
+}

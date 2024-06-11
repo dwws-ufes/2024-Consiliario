@@ -3,6 +3,7 @@ package br.inf.ufes.consiliario.application
 import br.inf.ufes.consiliario.config.AWSConfig
 import br.inf.ufes.consiliario.dto.RecommendationDto
 import br.inf.ufes.consiliario.entity.Recommendation
+import br.inf.ufes.consiliario.entity.RecommendationType
 import br.inf.ufes.consiliario.repository.RecommendationRepository
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
@@ -33,7 +34,8 @@ class RecommendationApplication(
         recommendationFile: FilePart?,
         recommendationUrl: String?
     ): RecommendationDto {
-        val recommendation = Recommendation(receiver = receiver, sender = sender)
+        val recommendation =
+            Recommendation(receiver = receiver, sender = sender)
 
         if (recommendationFile != null) {
             val fileId = UUID.randomUUID()
@@ -43,8 +45,10 @@ class RecommendationApplication(
 
             val fileUrl = s3Application.saveObject("$fileId.jpg", file)
             recommendation.url = fileUrl
+            recommendation.type = RecommendationType.FILE
         } else if (recommendationUrl != null) {
             recommendation.url = recommendationUrl
+            recommendation.type = RecommendationType.URL
         }
 
         return RecommendationDto(recommendationRepository.save(recommendation))
@@ -54,8 +58,8 @@ class RecommendationApplication(
     suspend fun deleteRecommendation(recommendationId: UUID) {
         val recommendation = recommendationRepository.findById(recommendationId)
         recommendation?.let {
-            recommendationRepository.delete(it)
             s3Application.deleteObject(it.url!!)
+            recommendationRepository.delete(it)
         } ?: throw Exception("Recommendation not found")
     }
 }

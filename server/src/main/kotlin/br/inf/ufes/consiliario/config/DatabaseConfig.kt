@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
+import java.util.*
 
 
 @Configuration
@@ -40,5 +41,9 @@ internal class DatabaseConfig : AbstractR2dbcConfiguration() {
         ob = ob.option(USER, "postgres")
         ob = ob.option(PASSWORD, "admin")
         return ConnectionFactories.get(ob.build())
+    }
+
+    override fun getCustomConverters(): MutableList<Any> {
+        return Collections.singletonList(EnumConverter())
     }
 }

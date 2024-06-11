@@ -4,5 +4,4 @@ import br.inf.ufes.consiliario.entity.Recommendation
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import java.util.*
 
-interface RecommendationRepository : CoroutineCrudRepository<Recommendation, UUID> {
-}
+interface RecommendationRepository : CoroutineCrudRepository<Recommendation, UUID>
