@@ -22,19 +22,26 @@
         </div>
       </form>
       <button class="button is-link mt-3" @click="goToRegisterTeacher">Register as Teacher</button>
+      <button class="button is-warning mt-3" @click="showChangePasswordModal = true">Change Password</button>
     </div>
+    <PasswordChangeModal :show="showChangePasswordModal" @close="showChangePasswordModal = false" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import PasswordChangeModal from '@/components/PasswordChangeModal.vue';
 
 export default {
+  components: {
+    PasswordChangeModal
+  },
   data() {
     return {
       email: '',
       password: '',
+      showChangePasswordModal: false
     };
   },
   methods: {
@@ -77,6 +84,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100%;
 }
 .box {
   width: 100%;
