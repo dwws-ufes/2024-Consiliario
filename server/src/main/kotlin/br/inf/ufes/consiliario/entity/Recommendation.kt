@@ -7,6 +7,5 @@ data class Recommendation(
     @Id val id: UUID? = null,
     val receiver: UUID,
     val sender: UUID,
-    var url: String? = null,
-    var fileUrl: String? = null
+    var url: String? = null
 )
