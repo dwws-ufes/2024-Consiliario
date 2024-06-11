@@ -58,6 +58,7 @@ export default {
   align-items: center;
   height: 100vh;
   background-color: #f5f5f5;
+  width: 100%;
 }
 
 .box {
