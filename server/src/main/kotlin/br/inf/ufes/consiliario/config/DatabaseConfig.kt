@@ -42,8 +42,4 @@ internal class DatabaseConfig : AbstractR2dbcConfiguration() {
         ob = ob.option(PASSWORD, "admin")
         return ConnectionFactories.get(ob.build())
     }
-
-    override fun getCustomConverters(): MutableList<Any> {
-        return Collections.singletonList(EnumConverter())
-    }
 }

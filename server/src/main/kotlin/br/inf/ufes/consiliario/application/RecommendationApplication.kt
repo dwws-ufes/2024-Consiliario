@@ -1,9 +1,7 @@
 package br.inf.ufes.consiliario.application
 
-import br.inf.ufes.consiliario.config.AWSConfig
 import br.inf.ufes.consiliario.dto.RecommendationDto
 import br.inf.ufes.consiliario.entity.Recommendation
-import br.inf.ufes.consiliario.entity.RecommendationType
 import br.inf.ufes.consiliario.repository.RecommendationRepository
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
@@ -43,12 +41,13 @@ class RecommendationApplication(
                 .map { dataBuffer -> dataBuffer.asInputStream() }
                 .awaitSingle()
 
-            val fileUrl = s3Application.saveObject("$fileId.jpg", file)
+            val fileExtension =
+                recommendationFile.filename().substring(recommendationFile.filename().lastIndexOf('.') + 1).lowercase()
+
+            val fileUrl = s3Application.saveObject("$fileId.$fileExtension", file)
             recommendation.url = fileUrl
-            recommendation.type = RecommendationType.FILE
         } else if (recommendationUrl != null) {
             recommendation.url = recommendationUrl
-            recommendation.type = RecommendationType.URL
         }
 
         return RecommendationDto(recommendationRepository.save(recommendation))
