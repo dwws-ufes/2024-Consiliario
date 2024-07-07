@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build: ./consiliario-front
@@ -12,7 +10,7 @@ services:
       - 8080:8080
 
   database:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
       POSTGRES_USER: postgres

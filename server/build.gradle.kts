@@ -31,19 +31,24 @@ dependencies {
 	implementation("org.postgresql:r2dbc-postgresql")
 	implementation("org.postgresql:postgresql")
 	implementation("io.r2dbc:r2dbc-spi:1.0.0.RELEASE")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.projectreactor:reactor-test")
-	testImplementation("org.springframework.security:spring-security-test")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.data:spring-data-r2dbc")
 	implementation("io.jsonwebtoken:jjwt:0.12.5")
 	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
+	implementation("org.apache.jena:jena-core:4.3.2")
+	implementation("org.apache.jena:jena-arq:4.3.2")
+	implementation("org.apache.jena:jena-tdb:4.3.2")
 
 	implementation(platform("software.amazon.awssdk:bom:2.25.64"))
 	implementation("software.amazon.awssdk:s3")
+
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("org.springframework.security:spring-security-test")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
 }

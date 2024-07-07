@@ -17,23 +17,18 @@ spring:
     url: jdbc:postgresql://database:5432/postgres
     locations: classpath:db/migration
 
-  mvc:
-    throw-exception-if-no-handler-found: true
-
   web:
     resources:
       add-mappings: false
-
-  datasource:
-    initialization-mode: always
-    initialize: true
-    schema: classpath:/schema.sql
-    continue-on-error: true
 
   servlet:
     multipart:
       max-file-size: 20MB
       max-request-size: 35MB
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
 
 jwt:
   secret: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-01234567890123456789012345678
