@@ -8,6 +8,8 @@ import DashboardLayout from '@/components/DashboardLayout.vue'
 import ResourceRegister from '@/components/ResourceRegister.vue'
 import TeacherRegister from '@/views/TeacherRegisterView.vue';
 import RecommendationList from '@/components/RecommendationList.vue';
+import CreateMeeting from '@/components/CreateMeeting.vue';
+import MeetingList from '../components/MeetingList.vue';
 
 Vue.use(VueRouter)
 
@@ -25,7 +27,9 @@ const routes = [
       { path: 'register-student', component: StudentRegister },
       { path: 'list-students', component: StudentList },
       { path: 'register-resource', component: ResourceRegister },
-      { path: 'recommendations', component: RecommendationList  }      
+      { path: 'recommendations', component: RecommendationList  },    
+      { path: 'register-meeting', component: CreateMeeting  },  
+      { path: 'meeting-list', component: MeetingList }  
     ]
   },
   {

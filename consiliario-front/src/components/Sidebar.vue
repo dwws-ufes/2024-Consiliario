@@ -14,9 +14,13 @@
             <router-link to="/register-resource" class="nav-link">Register Resource</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/recommendations" class="nav-link"
-              >Recommendations</router-link
-            >
+            <router-link to="/recommendations" class="nav-link">Recommendations</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/register-meeting" class="nav-link">Register Meeting</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/meeting-list" class="nav-link">List Meeting</router-link>
           </li>
         </ul>
       </div>

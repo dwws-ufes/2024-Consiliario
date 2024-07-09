@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.21.2",
     "jwt-decode": "^3.1.2",
+    "sparql-http-client": "^3.0.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
