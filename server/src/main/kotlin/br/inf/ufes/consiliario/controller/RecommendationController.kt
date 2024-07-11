@@ -44,4 +44,7 @@ class RecommendationController(
     suspend fun deleteRecommendation(
         @RequestParam recommendationId: UUID
     ) = recommendationApplication.deleteRecommendation(recommendationId)
+
+    @GetMapping("/rdf", produces = ["text/turtle"])
+    suspend fun getRecommendationsRdf() = recommendationApplication.getRecommendationsRdf()
 }
