@@ -1,7 +1,8 @@
 <template>
   <div class="meeting-list-container">
     <h2 class="title is-3">Meeting List</h2>
-    <table class="table is-striped is-fullwidth">
+    <div v-if="isLoading" class="loading">Loading...</div>
+    <table v-else class="table is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Date/Time</th>
@@ -29,12 +30,14 @@ export default {
   data() {
     return {
       meetings: [],
-      students: {}
+      students: {},
+      isLoading: true
     };
   },
   async created() {
-    await this.fetchMeetings();
     await this.fetchStudents();
+    await this.fetchMeetings();
+    this.isLoading = false;
   },
   methods: {
     async fetchMeetings() {
@@ -51,7 +54,7 @@ export default {
         const advisorId = localStorage.getItem('userId');
         const response = await axios.get(`http://localhost:8080/student/from-advisor?advisorId=${advisorId}`);
         response.data.forEach(student => {
-          this.students[student.id] = student.fullName;
+          this.$set(this.students, student.id, student.fullName);
         });
       } catch (error) {
         console.error('Error fetching students:', error);
@@ -76,5 +79,9 @@ export default {
 }
 .table {
   margin-top: 20px;
+}
+.loading {
+  text-align: center;
+  padding: 20px;
 }
 </style>
